@@ -2,11 +2,9 @@
 #define MAIN_H_INCLUDED
 
 /**
- * File: main.h
- * Auth: me
- * Desc: Header file containing prototypes for all functions
- *       used in the 0x08-recursion directory.
- */
+ * void prototypes()
+ * int prototypes()
+ */`
 
 void _puts_recursion(char *s);
 void _print_rev_recursion(char *s);
@@ -17,5 +15,6 @@ int _sqrt_recursion(int n);
 int is_prime_number(int n);
 int is_palindrome(char *s);
 int wildcmp(char *s1, char *s2);
+int _putchar(char c);
 
 #endif /* MAIN_H_INCLUDED */
