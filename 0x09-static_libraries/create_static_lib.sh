@@ -1,5 +1,4 @@
 #!/bin/bash
-gcc -Wall  -Werror  -Wextra  -c *.c
-ar  rc liball.a  *.o
-
-Press esc key
+gcc -Wall -pedantic -Werror -Wextra -c *.c
+ar -rc liball.a *.o
+ranlib liball.a
