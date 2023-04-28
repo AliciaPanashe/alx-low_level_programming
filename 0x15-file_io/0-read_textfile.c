@@ -1,39 +1,47 @@
 #include "main.h"
 #include <stdlib.h>
-
 /**
- * read_textfile - Reads a text file and prints it to POSIX stdout.
- * @filename: A pointer to the name of the file.
- * @letters: The number of letters it 
- *            should read and print.
- *
- * Return:  0 If the file fails or filename is NULL
- *         otherwise - the actual number of bytes the function can read and print.
- */
+  * read_textfile - reads a text file and prints it to the POSIX stdout
+  * @filename: file to read
+  * @letters: number of letters it should read and print
+  * Return: number of letters it could read and print or 0 if fails
+  */
+
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	ssize_t k, l, m;
-	char *buffer;
+	char *buff;
+	int of;
+	size_t lRead, check;
 
-	if (filename == NULL)
+	if (!filename || !letters)
 		return (0);
 
-	buffer = malloc(sizeof(char) * letters);
-	if (buffer == NULL)
+	buff = malloc(letters);
+	if (!buff)
 		return (0);
-
-	k = open(filename, O_RDONLY);
-	l = read(k, buffer, letters);
-	m = write(STDOUT_FILENO, buffer, l);
-
-	if (k == -1 || l == -1 || m == -1 || m != r)
+	/* open file */
+	of = open(filename, O_RDONLY);
+	if (of == -1)
 	{
-		free(buffer);
+		free(buff);
 		return (0);
 	}
+	/* read file up to "letters" amount of charachters */
+	lRead = read(of, buff, letters);
+	if (lRead < 1)
+	{
+		free(buff);
+		close(of);
+		return (0);
+	}
+	/* write content read */
+	check = write(STDOUT_FILENO, buff, lRead);
 
-	free(buffer);
-	close(k);
+	free(buff);
+	close(of);
 
-	return (m);
+	if (!check || check != lRead)
+		return (0);
+
+	return (lRead);
 }
